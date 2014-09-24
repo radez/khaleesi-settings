@@ -1,0 +1,49 @@
+- defaults:
+    name: khaleesi
+    description: |
+        Managed by Jenkins Job Builder. Do not edit via web.
+    concurrent: true
+    logrotate:
+        artifactDaysToKeep: 31
+    scm:
+        - repo-khaleesi
+        - repo-khaleesi-settings
+    wrappers:
+        - ansicolor
+        - timestamps
+        - workspace-cleanup
+    publishers:
+        - default-publishers
+
+- scm:
+    name: repo-khaleesi
+    scm:
+        - git:
+            basedir: khaleesi
+            url: https://github.com/redhat-openstack/khaleesi.git
+            branches:
+                - master
+
+- scm:
+    name: repo-khaleesi-settings
+    scm:
+        - git:
+            basedir: khaleesi-settings
+            url: http://REPLACE_ME/git/khaleesi-settings.git
+            branches:
+                - master
+
+- publisher:
+    name: default-publishers
+    publishers:
+        - archive:
+            artifacts: '**/*.tar.bz2, **/nosetests.xml'
+        - junit:
+            results: '**/nosetests.xml'
+            keep-long-stdio: False
+            test-stability: True
+        - groovy-postbuild: |
+            matcher = manager.getLogMatcher(".*avc:.* denied.*")
+            if(matcher?.matches()) {
+                manager.addShortText("SELinux Denial")
+            }

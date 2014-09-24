@@ -1,0 +1,6 @@
+--- !extends:instack-baremetal.yml
+args:
+    installer: instack
+    installer-custom: config
+
+

@@ -1,0 +1,8 @@
+nodes:
+    controller:
+        name: controller
+        remote_user: heat-admin
+
+    tempest:
+        name: tempest
+        remote_user: root

@@ -1,0 +1,12 @@
+tempest:
+    dir: '~{{ nodes.tempest.remote_user }}/tempest-dir'
+    setup_method: tempest/rpm
+    use_virtual_env: false
+    rpm:
+        version: 20140805
+    use_custom_repo: false
+    repo:
+        Fedora:
+            '19': http://REPLACE_ME/~REPLACE_ME/openstack-tempest-icehouse/fedora-19/
+            '20': http://REPLACE_ME/~REPLACE_ME/openstack-tempest-icehouse/fedora-20/
+

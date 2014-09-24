@@ -1,0 +1,23 @@
+tmp:
+    anchors:
+    -  &rpmurl 'http://REPLACE_ME/repos/rhos-release/'
+    -  &repourlhead 'http://REPLACE_ME/poodles/rhos-devel-ci/5.0.'
+    -  &repourlfoot_rhel6 '/latest/RHOS-5-RHEL-6/x86_64/os/'
+    -  &repourlfoot_rhel7 '/latest/RHOS-5-RHEL-7/x86_64/os/'
+
+product:
+    version: 5.0
+    short_version: 50
+    rpmrepo:
+        CentOS: *rpmurl
+        Fedora: *rpmurl
+        RedHat: *rpmurl
+    repo:
+        poodle:
+            RedHat:
+              '6.5': !join [*repourlhead, el6, *repourlfoot_rhel6]
+              '7.0': !join [*repourlhead, el7, *repourlfoot_rhel7]
+            CentOS:
+              '6.5': !join [*repourlhead, el6, *repourlfoot_rhel6]
+              '7.0': !join [*repourlhead, el7, *repourlfoot_rhel7]
+

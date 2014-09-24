@@ -1,0 +1,4 @@
+provisioner:
+  username: REPLACE_ME
+  password: password
+

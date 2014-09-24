@@ -1,0 +1,11 @@
+---
+args:
+    tester: tempest
+    tester-setup: rpm
+validation:
+    must_have:
+        - product-version
+        - distro
+        - installer-network
+        - installer-network-variant
+        - tester-tests

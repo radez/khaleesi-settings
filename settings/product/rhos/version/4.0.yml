@@ -1,0 +1,21 @@
+tmp:
+    anchors:
+    -  &rpmurl 'http://REPLACE_ME/repos/rhos-release/'
+    -  &repourlhead 'http://REPLACE_ME/poodles/rhos-devel-ci/4.0'
+    -  &repourlfoot_rhel6 '/latest/RHOS-4/x86_64/os/'
+
+product:
+    version: 4.0
+    short_version: 40
+    rpmrepo:
+        CentOS: *rpmurl
+        Fedora: *rpmurl
+        RedHat: *rpmurl
+    repo:
+        poodle:
+            RedHat:
+              '6.5': !join [*repourlhead, *repourlfoot_rhel6]
+            CentOS:
+              '6.5': !join [*repourlhead, *repourlfoot_rhel6]
+
+

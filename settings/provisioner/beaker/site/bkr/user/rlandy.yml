@@ -1,0 +1,4 @@
+provisioner:
+  beaker_user_name: REPLACE_ME
+  beaker_password: override beaker_password
+  beaker_group: openstack-m

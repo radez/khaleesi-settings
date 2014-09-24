@@ -1,0 +1,10 @@
+---
+
+nodes:
+    controller:
+        groups:
+            - sahara
+
+    tempest:
+        groups:
+            - sahara

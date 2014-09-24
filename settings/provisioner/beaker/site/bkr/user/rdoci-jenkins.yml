@@ -1,0 +1,3 @@
+provisioner:
+  beaker_user_name: rdoci-jenkins/REPLACE_ME@REDHAT.COM
+  beaker_group: openstack-m

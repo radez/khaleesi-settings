@@ -1,0 +1,17 @@
+--- !extends:common/all.yml
+
+distro:
+    version: "6.5"
+    short_version: 65
+    name: centos
+    short_name: c
+    config:
+        selinux: permissive
+    centos:
+        "6.5":
+            repos: []
+
+job:
+    archive:
+        - /etc/yum.repos.d
+

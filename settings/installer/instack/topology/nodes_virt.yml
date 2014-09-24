@@ -1,0 +1,19 @@
+nodes:
+    controller:
+        name: controller
+        remote_user: heat-admin
+
+    tempest:
+        name: tempest
+        host_name: !env [BEAKER_MACHINE, ibm-x3550m3-17.REPLACE_ME]
+        initimage: '{{ provisioner.strategy.libvirt.image[distro.name][distro.version].initimage | default("") }}'
+        image_install_url: '{{ provisioner.strategy.libvirt.image[distro.name][distro.version].install_url | default("") }}'
+        os_variant: '{{ provisioner.strategy.libvirt.image[distro.name][distro.version].os_variant | default("") }}'
+        remote_user: root
+        rt_password: stack
+        user_name: stack
+        user_password: stack
+        vcpus: 1
+        initmemsize: 2048
+        initdisksize: 8000
+

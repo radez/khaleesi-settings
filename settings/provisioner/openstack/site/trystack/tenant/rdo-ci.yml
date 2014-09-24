@@ -1,0 +1,22 @@
+--- !extends:common/image.yml
+
+# TODO: khaleesi use the dict below
+provisioner:
+    tenant_name: rdo-ci
+    key_file: rdo-ci-public.pem
+    key_name: rdo-ci-public
+    network:
+        nic:
+            net_1:
+                name: default
+                id:  2eb77f77-6a42-44c6-bddd-ca4cabf6279b
+            net_2:
+                name: packstack_int
+                id:  eb44e3e1-2046-45b0-97a5-8a83924107a7
+            net_3:
+                name: packstack_pub
+                id:   ecbd2613-55ed-4635-9eb7-3df798765a77
+        public_subnet_cidr: 172.31.30.0/24
+        public_allocation_start: 172.31.30.200
+        public_allocation_end: 172.31.30.220
+

@@ -1,0 +1,5 @@
+export ANSIBLE_HOST_KEY_CHECKING=False
+export ANSIBLE_ROLES_PATH=$WORKSPACE/khaleesi/roles
+export ANSIBLE_LIBRARY=$WORKSPACE/khaleesi/library:$VIRTUAL_ENV/share/ansible
+export ANSIBLE_DISPLAY_SKIPPED_HOSTS=False
+export ANSIBLE_FORCE_COLOR=yes

@@ -1,0 +1,5 @@
+tempest:
+    test_name: tempest.cli.simple_read_only.test_sahara
+    skip:
+        files: []
+        tests: []

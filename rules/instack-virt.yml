@@ -1,0 +1,23 @@
+---
+args:
+     installer: instack
+     installer-environ: virt
+     installer-topology: nodes_virt
+     product: rdo
+     product-version-images_repo: instack
+     tester: tempest
+     tester-setup: rpm
+     tester-tests: minimal
+     tester-installer_config: instack
+     job: instack-virt
+validation:
+    must_have:
+        - provisioner
+        - provisioner-site
+        - provisioner-site-user
+        - product-version
+        - product-version-repo
+        - distro
+        - installer-network
+        - installer-network-variant
+

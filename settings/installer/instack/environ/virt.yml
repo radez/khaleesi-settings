@@ -1,0 +1,4 @@
+instack:
+    environ:
+        vm_ssh_port: '4067'
+        vm_pw: 'stack'

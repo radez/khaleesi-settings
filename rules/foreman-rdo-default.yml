@@ -1,0 +1,5 @@
+--- !extends:foreman.yml
+args:
+    product: rdo
+    job: foreman-rdo
+    installer-topology: default

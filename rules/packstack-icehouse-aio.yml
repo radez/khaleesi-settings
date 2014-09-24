@@ -1,0 +1,19 @@
+---
+args:
+    installer: packstack
+    installer-network: neutron
+    installer-topology: aio
+    product: rdo
+    product-version: icehouse
+    product-version-repo: production
+    tester: tempest
+    tester-setup: rpm
+    tester-tests: minimal
+    job: packstack
+
+validation:
+    must_have:
+        - distro
+        - provisioner
+        - provisioner-site
+        - provisioner-site-user

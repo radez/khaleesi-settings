@@ -1,0 +1,6 @@
+installer:
+    environ:
+        macs: "2c:76:8a:ac:a4:00 2c:76:8a:ac:a3:ce 2c:76:8a:ac:a3:6a"
+        pm_ips: "10.16.72.194 10.16.72.195 10.16.72.196"
+        pm_users: "REPLACE_ME REPLACE_ME REPLACE_ME"
+        pm_passwords: "password password password"

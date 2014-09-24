@@ -1,0 +1,24 @@
+---
+args:
+     installer: instack
+     installer-environ: baremetal
+     installer-topology: nodes
+     product: rdo
+     product-version-images_repo: instack
+     tester: tempest
+     tester-setup: rpm
+     tester-tests: minimal
+     tester-installer_config: instack
+     job: instack-baremetal
+validation:
+    must_have:
+        - provisioner
+        - provisioner-site
+        - provisioner-site-user
+        - product-version
+        - product-version-repo
+        - distro
+        - installer-network
+        - installer-network-variant
+
+

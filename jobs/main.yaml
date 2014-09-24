@@ -1,0 +1,344 @@
+- job-template:
+    name: khaleesi-{product}-{product-version}-{product-version-repo}-{distro}-{topology}-{installer}-{network}-{network-variant}-{messaging}-{tester}-{tester-setup}-{tester-tests}
+    defaults: khaleesi
+    description: |
+        Managed by Jenkins Job Builder. Do not edit via web.
+        <p>
+        Please read the <a href="http://REPLACE_ME:81/khaleesi-settings/khaleesi.html">documentation</a> for setting up khaleesi. For reproducing the job, execute:
+        </p>
+        <pre>
+        ksgen --config-dir=$CONFIG_BASE/settings generate \
+              --rules-file=$CONFIG_BASE/rules/{installer}-{product}-{topology}.yml \
+              --provisioner=openstack \
+              --provisioner-site=qeos \
+              --provisioner-site-user=rhos-jenkins \
+              --product-version={product-version} \
+              --product-version-repo={product-version-repo} \
+              --product-version-workaround={distro} \
+              --workarounds=enabled \
+              --distro={distro} \
+              --installer-network={network} \
+              --installer-network-variant={network-variant} \
+              --tester-tests={tester-tests} \
+              ksgen_settings.yml
+        ./run.sh --verbose --use ksgen_settings.yml playbooks/{installer}.yml
+        </pre>
+    node: khaleesi
+    triggers:
+          - timed: "H H * * *"
+    builders:
+        - ksgen-builder:
+            product: '{product}'
+            product-version: '{product-version}'
+            product-version-repo: '{product-version-repo}'
+            distro: '{distro}'
+            topology: '{topology}'
+            installer: '{installer}'
+            network: '{network}'
+            network-variant: '{network-variant}'
+            messaging: '{messaging}'
+            tester: '{tester}'
+            tester-setup: '{tester-setup}'
+            tester-tests: '{tester-tests}'
+
+- builder:
+    name: ksgen-builder
+    builders:
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: default-python
+            nature: shell
+            clear: false
+            use-distribute: true
+            system-site-packages: false
+            ignore-exit-code: false
+            command: |
+                pip install -U ansible; ansible --version
+                source khaleesi-settings/packstack/jenkins/ansible_settings.sh
+                export CONFIG_BASE=$WORKSPACE/khaleesi-settings
+                export PRIVATE_KEY=$CONFIG_BASE/settings/provisioner/openstack/site/qeos/tenant/keys/rhos-jenkins.pem
+                chmod 600 $PRIVATE_KEY
+
+                # install ksgen
+                pushd khaleesi/tools/ksgen
+                python setup.py develop
+                popd
+
+                pushd khaleesi
+                cp $PRIVATE_KEY .
+                # generate config
+                ksgen --config-dir=$CONFIG_BASE/settings generate \
+                    --rules-file=$CONFIG_BASE/rules/{installer}-{product}-{topology}.yml \
+                    --provisioner=openstack \
+                    --provisioner-site=qeos \
+                    --provisioner-site-user=rhos-jenkins \
+                    --product-version={product-version} \
+                    --product-version-repo={product-version-repo} \
+                    --product-version-workaround={distro} \
+                    --workarounds=enabled \
+                    --distro={distro} \
+                    --installer-network={network} \
+                    --installer-network-variant={network-variant} \
+                    --tester-tests={tester-tests} \
+                    ksgen_settings.yml
+                # execute this if something fails or at the end
+                trap "$PWD/cleanup.sh ksgen_settings.yml" EXIT
+                # get nodes and run test
+                ./run.sh --verbose --use ksgen_settings.yml playbooks/{installer}.yml
+
+- project:
+    name: rhos5-jobs
+    product:
+        - rhos
+    product-version:
+        - 5.0
+    product-version-repo:
+        - poodle
+        - puddle
+    distro:
+        - rhel-7.0
+        - rhel-6.5
+    messaging:
+        - rabbitmq
+    tester:
+        - tempest
+    tester-setup:
+        - rpm
+    tester-tests:
+        - minimal
+        - smoke
+    jobs:
+        - 'khaleesi-{product}-{product-version}-{product-version-repo}-{distro}-{topology}-{installer}-{network}-{network-variant}-{messaging}-{tester}-{tester-setup}-{tester-tests}':
+            topology: aio
+            installer: packstack
+            network: neutron
+            network-variant: gre
+        - 'khaleesi-{product}-{product-version}-{product-version-repo}-{distro}-{topology}-{installer}-{network}-{network-variant}-{messaging}-{tester}-{tester-setup}-{tester-tests}':
+            topology: aio
+            installer: packstack
+            network: nova
+            network-variant: flatdhcp
+        - 'khaleesi-{product}-{product-version}-{product-version-repo}-{distro}-{topology}-{installer}-{network}-{network-variant}-{messaging}-{tester}-{tester-setup}-{tester-tests}':
+            topology: multinode
+            installer: packstack
+            network: neutron
+            network-variant:
+                - gre
+                - ml2-gre
+                - ml2-vxlan
+        - 'khaleesi-{product}-{product-version}-{product-version-repo}-{distro}-{topology}-{installer}-{network}-{network-variant}-{messaging}-{tester}-{tester-setup}-{tester-tests}':
+            topology: default
+            installer: foreman
+            network: neutron
+            network-variant:
+                - gre
+
+- project:
+    name: rhos4-jobs
+    product:
+        - rhos
+    product-version:
+        - 4.0
+    product-version-repo:
+        - poodle
+        - puddle
+    distro:
+        - rhel-6.5
+    messaging:
+        - rabbitmq
+    tester:
+        - tempest
+    tester-setup:
+        - rpm
+    tester-tests:
+        - minimal
+        - smoke
+    jobs:
+        - 'khaleesi-{product}-{product-version}-{product-version-repo}-{distro}-{topology}-{installer}-{network}-{network-variant}-{messaging}-{tester}-{tester-setup}-{tester-tests}':
+            topology: aio
+            installer: packstack
+            network: neutron
+            network-variant: gre
+        - 'khaleesi-{product}-{product-version}-{product-version-repo}-{distro}-{topology}-{installer}-{network}-{network-variant}-{messaging}-{tester}-{tester-setup}-{tester-tests}':
+            topology: aio
+            installer: packstack
+            network: nova
+            network-variant: flatdhcp
+        - 'khaleesi-{product}-{product-version}-{product-version-repo}-{distro}-{topology}-{installer}-{network}-{network-variant}-{messaging}-{tester}-{tester-setup}-{tester-tests}':
+            topology: multinode
+            installer: packstack
+            network: neutron
+            network-variant:
+                - gre
+        - 'khaleesi-{product}-{product-version}-{product-version-repo}-{distro}-{topology}-{installer}-{network}-{network-variant}-{messaging}-{tester}-{tester-setup}-{tester-tests}':
+            topology: default
+            installer: foreman
+            network: neutron
+            network-variant:
+                - gre
+
+- project:
+    name: rdo-juno-jobs
+    product:
+        - rdo
+    product-version:
+        - juno
+    product-version-repo:
+        - production
+        - stage
+    messaging:
+        - rabbitmq
+    tester:
+        - tempest
+    tester-setup:
+        - rpm
+    tester-tests:
+        - minimal
+    jobs:
+        - 'khaleesi-{product}-{product-version}-{product-version-repo}-{distro}-{topology}-{installer}-{network}-{network-variant}-{messaging}-{tester}-{tester-setup}-{tester-tests}':
+            topology: aio
+            installer: packstack
+            network: neutron
+            network-variant: gre
+            distro:
+                - fedora-20
+                - rhel-7.0
+                - centos-7.0
+        - 'khaleesi-{product}-{product-version}-{product-version-repo}-{distro}-{topology}-{installer}-{network}-{network-variant}-{messaging}-{tester}-{tester-setup}-{tester-tests}':
+            topology: aio
+            installer: packstack
+            network: nova
+            network-variant: flatdhcp
+            distro:
+                - fedora-20
+                - rhel-7.0
+                - centos-7.0
+        - 'khaleesi-{product}-{product-version}-{product-version-repo}-{distro}-{topology}-{installer}-{network}-{network-variant}-{messaging}-{tester}-{tester-setup}-{tester-tests}':
+            topology: multinode
+            installer: packstack
+            network: neutron
+            network-variant:
+                - gre
+                - ml2-gre
+                - ml2-vxlan
+            distro:
+                - fedora-20
+                - rhel-7.0
+                - centos-7.0
+
+- project:
+    name: rdo-icehouse-jobs
+    product:
+        - rdo
+    product-version:
+        - icehouse
+    product-version-repo:
+        - production
+        - stage
+    messaging:
+        - rabbitmq
+    tester:
+        - tempest
+    tester-setup:
+        - rpm
+    tester-tests:
+        - minimal
+    jobs:
+        - 'khaleesi-{product}-{product-version}-{product-version-repo}-{distro}-{topology}-{installer}-{network}-{network-variant}-{messaging}-{tester}-{tester-setup}-{tester-tests}':
+            topology: aio
+            installer: packstack
+            network: neutron
+            network-variant: gre
+            distro:
+                - fedora-20
+                - centos-6.5
+                - centos-7.0
+                - rhel-6.5
+                - rhel-7.0
+        - 'khaleesi-{product}-{product-version}-{product-version-repo}-{distro}-{topology}-{installer}-{network}-{network-variant}-{messaging}-{tester}-{tester-setup}-{tester-tests}':
+            topology: aio
+            installer: packstack
+            network: nova
+            network-variant: flatdhcp
+            distro:
+                - fedora-20
+                - centos-6.5
+                - centos-7.0
+                - rhel-6.5
+                - rhel-7.0
+        - 'khaleesi-{product}-{product-version}-{product-version-repo}-{distro}-{topology}-{installer}-{network}-{network-variant}-{messaging}-{tester}-{tester-setup}-{tester-tests}':
+            topology: multinode
+            installer: packstack
+            network: neutron
+            network-variant:
+                - gre
+                - ml2-gre
+                - ml2-vxlan
+            distro:
+                - fedora-20
+                - centos-6.5
+                - centos-7.0
+                - rhel-6.5
+                - rhel-7.0
+        - 'khaleesi-{product}-{product-version}-{product-version-repo}-{distro}-{topology}-{installer}-{network}-{network-variant}-{messaging}-{tester}-{tester-setup}-{tester-tests}':
+            topology: default
+            installer: foreman
+            network: neutron
+            network-variant:
+                - gre
+            distro:
+                - rhel-6.5
+                - rhel-7.0
+                - centos-7.0
+
+- project:
+    name: rdo-havana-jobs
+    product:
+        - rdo
+    product-version:
+        - havana
+    product-version-repo:
+        - production
+        - stage
+    messaging:
+        - rabbitmq
+    tester:
+        - tempest
+    tester-setup:
+        - rpm
+    tester-tests:
+        - minimal
+    jobs:
+        - 'khaleesi-{product}-{product-version}-{product-version-repo}-{distro}-{topology}-{installer}-{network}-{network-variant}-{messaging}-{tester}-{tester-setup}-{tester-tests}':
+            topology: aio
+            installer: packstack
+            network: neutron
+            network-variant: gre
+            distro:
+                - fedora-19
+                - rhel-6.5
+        - 'khaleesi-{product}-{product-version}-{product-version-repo}-{distro}-{topology}-{installer}-{network}-{network-variant}-{messaging}-{tester}-{tester-setup}-{tester-tests}':
+            topology: aio
+            installer: packstack
+            network: nova
+            network-variant: flatdhcp
+            distro:
+                - fedora-19
+                - rhel-6.5
+        - 'khaleesi-{product}-{product-version}-{product-version-repo}-{distro}-{topology}-{installer}-{network}-{network-variant}-{messaging}-{tester}-{tester-setup}-{tester-tests}':
+            topology: multinode
+            installer: packstack
+            network: neutron
+            network-variant:
+                - gre
+            distro:
+                - fedora-19
+                - rhel-6.5
+        - 'khaleesi-{product}-{product-version}-{product-version-repo}-{distro}-{topology}-{installer}-{network}-{network-variant}-{messaging}-{tester}-{tester-setup}-{tester-tests}':
+            topology: default
+            installer: foreman
+            network: neutron
+            network-variant:
+                - gre
+            distro:
+                - rhel-6.5

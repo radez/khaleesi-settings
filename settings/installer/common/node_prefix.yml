@@ -1,0 +1,9 @@
+node:
+    prefix:
+        - !lookup product.short_name
+        - !lookup installer.short_name
+        - !random 10
+        - !env [BUILD_NUMBER, ~]
+
+tmp:
+    node_prefix: '{{ node.prefix | reject("none") | join("-") }}-'

@@ -1,0 +1,62 @@
+--- !extends:../../common/multinode.yml
+
+packstack:
+    config:
+        CONFIG_NOVA_NETWORK_PUBIF: eth0
+        CONFIG_NOVA_COMPUTE_PRIVIF: eth1
+        CONFIG_NOVA_NETWORK_PRIVIF: eth1
+        CONFIG_CEILOMETER_INSTALL: n
+
+nodes:
+    controller: &controller
+        name: '{{ tmp.node_prefix }}controller'
+        hostname: '{{ installer.name }}.example.com'
+        image_id: '{{ provisioner.image[distro.name][distro.version].id }}'
+        remote_user: !lookup provisioner.image[distro.name][distro.version].remote_user
+        flavor_id: !lookup provisioner.flavor.large
+        nics:
+            - net-id: !lookup provisioner.network.nic.net_1.id
+            - net-id: !lookup provisioner.network.nic.net_2.id
+            - net-id: !lookup provisioner.network.nic.net_3.id
+
+        net_interfaces:
+            - { interface: 'eth1',
+                network_name: !lookup provisioner.network.nic.net_2.name }
+            - { interface: 'eth2',
+                network_name: !lookup provisioner.network.nic.net_3.name }
+        bridge_interfaces:
+            - { name: br-ex, interface: eth2,
+                network_name: !lookup provisioner.network.nic.net_3.name }
+        groups:
+            - controller
+            - openstack_nodes
+            - networker
+            - !lookup installer.name
+            - !lookup product.name
+            - !lookup installer.network.plugin.name
+
+    compute:
+        <<: *controller
+        name: '{{ tmp.node_prefix }}compute'
+        groups:
+            - compute
+            - openstack_nodes
+            - !lookup installer.name
+            - !lookup product.name
+            - !lookup installer.network.plugin.name
+
+    tempest:
+        <<: *controller
+        name: '{{ tmp.node_prefix }}tempest'
+        hostname: 'tempest.example.com'
+        image_id: !lookup provisioner.image.fedora.20.id
+        remote_user: !lookup provisioner.image.fedora.20.remote_user
+        flavor_id: !lookup provisioner.flavor.small
+        net_interfaces:
+            - { interface: 'eth1',
+                network_name: !lookup provisioner.network.nic.net_2.name }
+            - { interface: 'eth2',
+                network_name: !lookup provisioner.network.nic.net_3.name }
+        groups:
+            - tempest
+            - openstack_nodes

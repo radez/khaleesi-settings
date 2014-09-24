@@ -1,0 +1,5 @@
+product:
+  name: rhos
+  short_name: rhos
+  config:
+    enable_epel: n

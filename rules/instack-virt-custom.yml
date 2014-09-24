@@ -1,0 +1,6 @@
+--- !extends:instack-virt.yml
+args:
+    installer: instack
+    installer-custom: config
+
+

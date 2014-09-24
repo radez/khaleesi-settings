@@ -1,0 +1,10 @@
+args:
+    tester: unittest
+    job: unittest
+    provisioner: openstack
+    provisioner-site: qeos
+    provisioner-site-user: rhos-jenkins
+
+must_have:
+    - distro
+    - tester-component

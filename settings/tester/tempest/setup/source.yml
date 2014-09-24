@@ -1,0 +1,9 @@
+tempest:
+    dir: '~{{ nodes.tempest.remote_user }}/tempest-dir'
+    setup_method: tempest/config_script
+    use_virtual_env: true
+    local_dir: /tmp/tempest
+    git:
+        repo: https://github.com/redhat-openstack/tempest.git
+        version: HEAD
+        local: true

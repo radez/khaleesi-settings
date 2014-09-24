@@ -1,0 +1,15 @@
+---
+args:
+    installer: staypuft
+    installer-topology: vagrant
+    installer-network: neutron
+    installer-network-variant: gre
+    product: rhos
+    product-version: 5.0
+    product-version-repo: puddle
+    job: staypuft
+    provisioner: vagrant
+
+validation:
+    must_have:
+        - distro

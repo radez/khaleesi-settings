@@ -1,0 +1,19 @@
+--- !extends:common/rhel.yml
+
+distro:
+    version: "7.0"
+    short_version: 70
+    name: centos
+    short_name: c
+    config:
+        selinux: permissive
+    centos:
+        "7.0":
+            repos: []
+
+job:
+    archive:
+        - /etc/yum.repos.d
+
+distro_reboot_options: "--no-wall ' Reboot is triggered by Ansible' "
+

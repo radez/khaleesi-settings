@@ -1,0 +1,10 @@
+provisioner:
+  machine_name: virtblade11.REPLACE_ME
+  network:
+      public_subnet_cidr: 172.16.22.0/24
+      public_allocation_start: 172.16.22.200
+      public_allocation_end: 172.16.22.220
+
+
+
+
