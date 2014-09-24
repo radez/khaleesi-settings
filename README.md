@@ -6,11 +6,12 @@ settings required for executing khaleesi provisioned openstack environments.
 Use with khaleesi code repository
 https://github.com/redhat-openstack/khaleesi
 
-
+```
 Example Workflow
 =================
 git clone https://github.com/redhat-openstack/khaleesi.git
 git clone https://github.com/redhat-openstack/khaleesi-settings.git
+
 
 virtualenv venv
 source venv/bin/activate
@@ -48,3 +49,4 @@ ksgen --config-dir=$CONFIG_BASE/settings generate \
     ksgen_settings.yml
 
 ./run.sh --verbose --use ksgen_settings.yml  playbooks/packstack.yml
+```
