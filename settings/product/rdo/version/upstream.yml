@@ -1,11 +1,11 @@
 tmp:
     anchors:
-    - &rpmurl 'http://repos.fedorapeople.org/repos/openstack/openstack-icehouse/rdo-release-icehouse-4.noarch.rpm'
-    - &repo_url 'http://repos.fedorapeople.org/repos/openstack/openstack-icehouse/'
+    - &rpmurl 'https://repos.fedorapeople.org/repos/openstack/openstack-juno/rdo-release-juno-1.noarch.rpm'
+    - &repo_url 'http://repos.fedorapeople.org/repos/openstack/openstack-juno/'
 
 product:
-    version: icehouse
-    short_version: ih
+    version: upstream
+    short_version: up
     rpm:
         CentOS: *rpmurl
         Fedora: *rpmurl
@@ -21,6 +21,7 @@ product:
                 '7.0.1406': !join [*repo_url, epel-7]
             Fedora:
                 '20': !join [*repo_url, fedora-20]
+                '21': !join [*repo_url, fedora-21]
 
             RedHat:
                 '6.5': !join [*repo_url, epel-6]

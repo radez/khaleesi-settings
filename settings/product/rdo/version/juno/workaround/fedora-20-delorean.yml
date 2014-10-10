@@ -1,0 +1,8 @@
+workaround:
+    install_missing_deps: yes
+
+delorean:
+    deps:
+      - python-osprofiler
+      - python-oslo-serialization
+      - python-glance-store

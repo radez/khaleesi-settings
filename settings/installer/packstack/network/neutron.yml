@@ -5,3 +5,7 @@ installer:
         variant:
             short_name: gre
         auto_assign_floating_ip: false
+
+packstack:
+    config:
+        CONFIG_NEUTRON_FWAAS: y

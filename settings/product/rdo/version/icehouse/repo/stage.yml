@@ -16,5 +16,6 @@ product:
 
             RedHat:
                 '6.5': !join [*repo_url, epel-6]
+                '6.6': !join [*repo_url, epel-6]
                 '7.0': !join [*repo_url, epel-7]
 

@@ -7,8 +7,9 @@ distro:
         selinux: permissive
     rhel:
         subscription:
-            username: sm_username
-            password: sm_password
+            username: REPLACE_ME
+            password: HWj8TE28Qi0eP2c
+            pool: 8a85f9823e3d5e43013e3ddd4e2a0977
         ### should move to individual distro-version files when
         ### ksgen starts supporting multiple options feature
         "7.0":
@@ -38,18 +39,37 @@ distro:
             repos:
                 - section: rhel6.5-server-rpms
                   name: Packages for RHEL 6.5 - $basearch
-                  baseurl: http://REPLACE_ME/sysrepos/rhel6-server-core-x86_64/RPMS.os/
+                  baseurl: http://REPLACE_ME.REPLACE_ME/released/RHEL-6/6.5/Server/$basearch/os/Server
                   gpgcheck: 0
 
                 - section: rhel-6.5-server-update-rpms
                   name: Update Packages for Enterprise Linux 6.5 - $basearch
-                  baseurl: http://REPLACE_ME/sysrepos/rhel6-server-core-x86_64/RPMS.updates/
+                  baseurl: http://REPLACE_ME.REPLACE_ME/rel-eng/repos/RHEL-6.5-Z/$basearch/
                   gpgcheck: 0
 
                 - section: rhel-6.5-server-optional-rpms
                   name: Optional Packages for Enterprise Linux 6.5 - $basearch
-                  baseurl: http://REPLACE_ME/sysrepos/rhel6-server-core-x86_64/RPMS.optional/
+                  baseurl: http://REPLACE_ME.REPLACE_ME/released/RHEL-6/6.5/Server/optional/$basearch/os
                   gpgcheck: 0
+
+                - section: rhel6.5-server-rpms-32bit
+                  name: Packages for RHEL 6.5 - i386
+                  baseurl: http://REPLACE_ME.REPLACE_ME/released/RHEL-6/6.5/Server/i386/os/Server
+                  gpgcheck: 0
+                  enabled: 1
+
+                - section: rhel-6.5-server-update-rpms-32bit
+                  name: Update Packages for Enterprise Linux 6.5 - i686
+                  baseurl: http://REPLACE_ME.REPLACE_ME/rel-eng/repos/RHEL-6.5-Z/i686/
+                  gpgcheck: 0
+                  enabled: 1
+
+                - section: rhel-6.5-server-optional-rpms-32bit
+                  name: Optional Packages for Enterprise Linux 6.5 - i386
+                  baseurl: http://REPLACE_ME.REPLACE_ME/released/RHEL-6/6.5/Server/optional/i386/os
+                  gpgcheck: 0
+                  enabled: 1
+
 
 
 job:

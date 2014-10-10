@@ -2,8 +2,8 @@ distro:
     config:
         ntp_server: 0.pool.ntp.org
         dns_servers:
-          - 8.8.8.8
-          - 8.8.4.4
+          - 10.34.32.1
+          - 10.34.32.3
         reboot_delay: 1
         selinux: enforcing
         initial_boot_timeout: 180 #seconds

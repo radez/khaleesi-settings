@@ -1,1 +1,2 @@
 workaround:
+    rhel65_update: true

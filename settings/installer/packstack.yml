@@ -23,6 +23,7 @@ job:
         - /var/tmp/packstack
         - /root/
         - /var/log/
+        - /var/lib/mysql
         - /etc/nova
         - /etc/ceilometer
         - /etc/cinder

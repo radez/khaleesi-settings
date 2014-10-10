@@ -1,0 +1,16 @@
+--- !extends:common/all.yml
+
+distro:
+    version: '21'
+    short_version: '21'
+    name: fedora
+    short_name: f
+    config:
+        selinux: permissive
+    fedora:
+        '21':
+            repos: []
+
+job:
+    archive:
+        - /etc/yum.repos.d

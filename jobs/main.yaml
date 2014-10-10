@@ -19,9 +19,10 @@
               --distro={distro} \
               --installer-network={network} \
               --installer-network-variant={network-variant} \
+              --installer-messaging={messaging} \
               --tester-tests={tester-tests} \
               ksgen_settings.yml
-        ./run.sh --verbose --use ksgen_settings.yml playbooks/{installer}.yml
+        ./run.sh -vv --use ksgen_settings.yml playbooks/{installer}.yml
         </pre>
     node: khaleesi
     triggers:
@@ -79,12 +80,13 @@
                     --distro={distro} \
                     --installer-network={network} \
                     --installer-network-variant={network-variant} \
+                    --installer-messaging={messaging} \
                     --tester-tests={tester-tests} \
                     ksgen_settings.yml
                 # execute this if something fails or at the end
                 trap "$PWD/cleanup.sh ksgen_settings.yml" EXIT
                 # get nodes and run test
-                ./run.sh --verbose --use ksgen_settings.yml playbooks/{installer}.yml
+                ./run.sh -vv --use ksgen_settings.yml playbooks/{installer}.yml
 
 - project:
     name: rhos5-jobs
@@ -188,6 +190,7 @@
         - stage
     messaging:
         - rabbitmq
+        - qpidd
     tester:
         - tempest
     tester-setup:
@@ -201,6 +204,7 @@
             network: neutron
             network-variant: gre
             distro:
+                - fedora-21
                 - fedora-20
                 - rhel-7.0
                 - centos-7.0

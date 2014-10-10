@@ -15,7 +15,11 @@ product:
         poodle:
             RedHat:
               '6.5': !join [*repourlhead, *repourlfoot_rhel6]
+              '6.6': !join [*repourlhead, *repourlfoot_rhel6]
             CentOS:
               '6.5': !join [*repourlhead, *repourlfoot_rhel6]
 
-
+tempest:
+    rpm:
+        version: 20140805
+    use_custom_repo: false

@@ -6,6 +6,9 @@ packstack:
         CONFIG_NOVA_COMPUTE_PRIVIF: eth1
         CONFIG_NOVA_NETWORK_PRIVIF: eth1
         CONFIG_CEILOMETER_INSTALL: n
+        CONFIG_NAGIOS_INSTALL: n
+        CONFIG_LBAAS_INSTALL: y
+        CONFIG_HEAT_CLOUDWATCH_INSTALL: y
 
 nodes:
     controller: &controller
@@ -30,16 +33,38 @@ nodes:
         groups:
             - controller
             - openstack_nodes
-            - networker
             - !lookup installer.name
             - !lookup product.name
             - !lookup installer.network.plugin.name
 
-    compute:
+    compute-1:
         <<: *controller
-        name: '{{ tmp.node_prefix }}compute'
+        name: '{{ tmp.node_prefix }}compute-1'
+        hostname: 'compute-1.example.com'
         groups:
             - compute
+            - openstack_nodes
+            - !lookup installer.name
+            - !lookup product.name
+            - !lookup installer.network.plugin.name
+
+    compute-2:
+        <<: *controller
+        name: '{{ tmp.node_prefix }}compute-2'
+        hostname: 'compute-2.example.com'
+        groups:
+            - compute
+            - openstack_nodes
+            - !lookup installer.name
+            - !lookup product.name
+            - !lookup installer.network.plugin.name
+
+    network:
+        <<: *controller
+        name: '{{ tmp.node_prefix }}network'
+        hostname: 'network.example.com'
+        groups:
+            - networker
             - openstack_nodes
             - !lookup installer.name
             - !lookup product.name

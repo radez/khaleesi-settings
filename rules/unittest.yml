@@ -4,6 +4,7 @@ args:
     provisioner: openstack
     provisioner-site: qeos
     provisioner-site-user: rhos-jenkins
+    etherpad: production
 
 must_have:
     - distro

@@ -64,7 +64,7 @@ nodes:
         <<: *controller
         name: '{{ tmp.node_prefix }}foreman'
         hostname: '{{ tmp.node_prefix }}foreman.example.com'
-        image_id: "{{ provisioner.image['rhel']['6.5'].id }}"
+        image_id: "{{ provisioner.image['centos']['6.5'].id }}"
         remote_user: cloud-user
         groups:
             - foreman

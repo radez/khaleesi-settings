@@ -22,4 +22,9 @@ product:
             RedHat:
                 '6.5': !join [*repo_url, epel-6]
 
+tempest:
+    rpm:
+        version: 20140805
+    use_custom_repo: false
+
 

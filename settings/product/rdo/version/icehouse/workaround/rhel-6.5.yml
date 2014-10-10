@@ -1,1 +1,2 @@
 workaround:
+    quickstack_cinder: true
