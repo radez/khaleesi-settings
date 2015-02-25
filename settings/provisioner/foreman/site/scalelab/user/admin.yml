@@ -1,0 +1,3 @@
+provisioner:
+    username: admin
+    password: changeme

@@ -1,0 +1,5 @@
+provisioner:
+    skip: none
+    type: foreman
+    network:
+        type: physical

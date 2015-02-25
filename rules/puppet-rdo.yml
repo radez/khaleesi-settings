@@ -1,0 +1,3 @@
+--- !extends:puppet.yml
+args:
+    product: rdo

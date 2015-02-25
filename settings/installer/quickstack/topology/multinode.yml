@@ -1,0 +1,72 @@
+--- !extends:../../common/multinode.yml
+
+nodes:
+    control.example.com:
+        name: control
+        hostname: control.example.com
+        ipmi_username: root
+        ipmi_password: calvin
+        ipmi_host: 10.1.8.70
+
+        groups:
+            - controller
+            - foreman_nodes
+            - !lookup installer.name
+            - !lookup product.name
+            - !lookup installer.network.plugin.name
+
+    network.example.com:
+        name: network
+        hostname: network.example.com
+        ipmi_username: root
+        ipmi_password: calvin
+        ipmi_host: 10.1.8.78
+
+        groups:
+            - networker
+            - foreman_nodes
+            - !lookup installer.name
+            - !lookup product.name
+            - !lookup installer.network.plugin.name
+
+    compute1.example.com:
+        name: compute1
+        hostname: compute1.example.com
+        ipmi_username: root
+        ipmi_password: calvin
+        ipmi_host: 10.1.8.73
+
+        groups:
+            - compute
+            - foreman_nodes
+            - !lookup installer.name
+            - !lookup product.name
+            - !lookup installer.network.plugin.name
+
+    compute2.example.com:
+        name: compute2
+        hostname: compute2.example.com
+        ipmi_username: root
+        ipmi_password: calvin
+        ipmi_host: 10.1.8.74
+
+        groups:
+            - compute
+            - foreman_nodes
+            - !lookup installer.name
+            - !lookup product.name
+            - !lookup installer.network.plugin.name
+
+    tempest.example.com:
+        name: tempest
+        hostname: tempest.example.com
+        ipmi_username: root
+        ipmi_password: calvin
+        ipmi_host: 10.1.8.76
+
+        groups:
+            - tempest
+            - foreman_nodes
+            - !lookup installer.name
+            - !lookup product.name
+            - !lookup installer.network.plugin.name

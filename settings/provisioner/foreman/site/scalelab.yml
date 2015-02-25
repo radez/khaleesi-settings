@@ -1,0 +1,5 @@
+provisioner:
+    foreman_url: 'https://10.1.254.1/api/v2/'
+    network:
+        name: external
+        type: nova

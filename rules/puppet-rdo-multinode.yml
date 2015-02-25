@@ -1,0 +1,3 @@
+--- !extends:puppet-rdo.yml
+args:
+    installer-topology: multinode

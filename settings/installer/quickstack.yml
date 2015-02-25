@@ -1,0 +1,18 @@
+installer:
+    name: puppet
+    short_name: pupt
+
+job:
+    archive:
+        - /root/
+        - /var/log/
+        - /etc/nova
+        - /etc/ceilometer
+        - /etc/cinder
+        - /etc/glance
+        - /etc/keystone
+        - /etc/neutron
+        - /etc/ntp
+        - /etc/puppet
+        - /etc/qpid
+        - /etc/qpidd.conf

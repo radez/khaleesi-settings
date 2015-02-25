@@ -1,0 +1,7 @@
+--- !extends:common/image.yml
+
+# TODO: khaleesi use the dict below
+provisioner:
+    tenant_name: opnfv
+    key_file: rdo-ci-public.pem
+    key_name: rdo-ci-public
